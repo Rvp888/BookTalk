@@ -27,20 +27,36 @@ export const metadata: Metadata = {
     "Transform your books into interactive AI conversations. Upload PDFs, and chat with your books using voice.",
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
-    <html
-      lang="en"
-      className={`${ibmPlexSerif.variable} ${monaSans.variable} h-full antialiased`}
-    >
-      <body className="min-h-full flex flex-col">
-        <ClerkProvider ui={ui} appearance={{ theme: shadcn }}>
-          <Suspense fallback={null}>
-            <Navbar />
-          </Suspense>
+    // <html
+    //   lang="en"
+    //   className={`${ibmPlexSerif.variable} ${monaSans.variable} h-full antialiased`}
+    // >
+    //   <body className="min-h-full flex flex-col">
+    //     <ClerkProvider ui={ui} appearance={{ theme: shadcn }}>
+    //       <Suspense fallback={null}>
+    //         <Navbar />
+    //       </Suspense>
+    //       {children}
+    //     </ClerkProvider>
+    //   </body>
+    // </html>
+
+    <ClerkProvider>
+      <html lang="en">
+        <body
+          className={`${ibmPlexSerif.variable} ${monaSans.variable} relative font-sans antialiased`}
+        >
+          <Navbar />
           {children}
-        </ClerkProvider>
-      </body>
-    </html>
+          {/* <Toaster /> */}
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
