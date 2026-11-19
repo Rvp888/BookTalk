@@ -1,5 +1,14 @@
 "use client";
 
+import {
+  Show,
+  SignInButton,
+  SignUpButton,
+  UserButton,
+  SignedOut,
+  SignedIn,
+  useUser,
+} from "@clerk/nextjs";
 import { cn } from "cn";
 import Image from "next/image";
 import Link from "next/link";
@@ -13,6 +22,7 @@ const navItems = [
 
 export default function Navbar() {
   const pathName = usePathname();
+  const { user } = useUser();
 
   return (
     <header className="w-full fixed z-50 bg-(--bg-primary)">
@@ -40,6 +50,40 @@ export default function Navbar() {
               </Link>
             );
           })}
+          <Show when="signed-out">
+            <SignInButton mode="redirect">
+              <button className="nav-btn">Sign In</button>
+            </SignInButton>
+            <SignUpButton mode="redirect">
+              <button className="nav-btn text-(--color-brand)">Sign Up</button>
+            </SignUpButton>
+          </Show>
+          <Show when="signed-in">
+            <div className="nav-user-link">
+              <UserButton />
+              {user?.firstName && (
+                <Link href="/subscriptions" className="nav-user-name">
+                  {user.firstName[0].toUpperCase() + user.firstName.slice(1)}
+                </Link>
+              )}
+            </div>
+          </Show>
+
+          {/* <div className="flex gap-7.5 items-center">
+            <SignedOut>
+              <SignInButton mode="modal" />
+            </SignedOut>
+            <SignedIn>
+              <div className="nav-user-link">
+                <UserButton />
+                {user?.firstName && (
+                  <Link href="/subscriptions" className="nav-user-name">
+                    {user.firstName}
+                  </Link>
+                )}
+              </div>
+            </SignedIn>
+          </div> */}
         </nav>
       </div>
     </header>
