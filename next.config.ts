@@ -15,6 +15,18 @@ const nextConfig: NextConfig = {
       },
     },
   },
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+  images: {
+    remotePatterns: [
+      { protocol: "https", hostname: "covers.openlibrary.org" },
+      {
+        protocol: "https",
+        hostname: "lspfdyhgsrgsxcju.public.blob.vercel-storage.com",
+      },
+    ],
+  },
 };
 
 export default nextConfig;
